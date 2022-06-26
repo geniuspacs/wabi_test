@@ -1,0 +1,8 @@
+<ng-container *ngIf="data">
+
+  <app-menu *ngFor="let item of data | filter: { parentId: null }" [isRootNode]="true" [trigger]="item.name"
+    [data]="data">
+  </app-menu>
+
+
+</ng-container>

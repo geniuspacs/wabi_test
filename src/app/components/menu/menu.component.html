@@ -1,0 +1,33 @@
+<ng-container *ngIf="isRootNode">
+  <button *ngIf="hasChildren(getIdByName(trigger))" mat-button [matMenuTriggerFor]="menu"
+    [matMenuTriggerData]="{childrens: getData(trigger)}">
+    {{ trigger }}
+  </button>
+  <button *ngIf="!hasChildren(getIdByName(trigger))" mat-button>
+    {{ trigger }}
+  </button>
+</ng-container>
+
+<ng-container *ngIf="!isRootNode">
+  <button *ngIf="hasChildren(getIdByName(trigger))" mat-menu-item [matMenuTriggerFor]="menu"
+    [matMenuTriggerData]="{childrens: getData(trigger)}">
+    {{ trigger }}
+  </button>
+  <button *ngIf="!hasChildren(getIdByName(trigger))" mat-menu-item>
+    {{ trigger }}
+  </button>
+</ng-container>
+
+
+<mat-menu #menu="matMenu">
+  <ng-template matMenuContent let-childrens="childrens">
+    <ng-container *ngFor="let node of childrens; let i = index">
+      <button mat-menu-item>
+        <app-menu [trigger]="node.name" *ngIf="hasChildren(node.id); else menuItem" [data]="data"></app-menu>
+      </button>
+      <ng-template #menuItem>
+        <button mat-menu-item>{{ node.name }}</button>
+      </ng-template>
+    </ng-container>
+  </ng-template>
+</mat-menu>
